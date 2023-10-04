@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EcommerceNET.DTO\EcommerceNET.DTO.csproj" />
+    <ProjectReference Include="..\EcommerceNET.Model\EcommerceNET.Model.csproj" />
+    <ProjectReference Include="..\EcommerceNET.Repository\EcommerceNET.Repository.csproj" />
+    <ProjectReference Include="..\EcommerceNET.Utils\EcommerceNET.Utils.csproj" />
+  </ItemGroup>
+
+</Project>
