@@ -114,7 +114,7 @@ namespace EcommerceNET.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("Delete")]
+        [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             var response = new ResponseDTO<bool>();
