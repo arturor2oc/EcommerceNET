@@ -18,7 +18,7 @@ namespace EcommerceNET.API.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("List/{searh:alpha?}")]
+        [HttpGet("List/{searh?}")]
         public async Task<IActionResult> List(string searh = "NA")
         {
             var response = new ResponseDTO<List<CategoriaDTO>>();
