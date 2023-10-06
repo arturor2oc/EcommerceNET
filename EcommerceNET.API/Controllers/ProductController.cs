@@ -39,7 +39,7 @@ namespace EcommerceNET.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("Catalog/{category:alpha}/{searh:alpha?}")]
+        [HttpGet("Catalog/{category}/{searh?}")]
         public async Task<IActionResult> Catalog(string category, string searh = "NA")
         {
             var response = new ResponseDTO<List<ProductoDTO>>();
