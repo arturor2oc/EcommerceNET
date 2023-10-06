@@ -43,7 +43,7 @@ namespace EcommerceNET.WebAssembly.Services.Implements
 
         public async Task<ResponseDTO<bool>> Update(ProductoDTO model)
         {
-            var response = await _httpClient.PostAsJsonAsync("Product/Update", model);
+            var response = await _httpClient.PutAsJsonAsync("Product/Update", model);
             var result = await response.Content.ReadFromJsonAsync<ResponseDTO<bool>>();
             return result!;
         }
