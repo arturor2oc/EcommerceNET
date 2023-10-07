@@ -21,7 +21,7 @@ namespace EcommerceNET.DTO
         public string? Clave { get; set; }
 
         [Required(ErrorMessage = "Ingrese confirmar contraseña")]
-        public int? ConfirmarClave { get; set; }
+        public string? ConfirmarClave { get; set; }
 
         public string? Rol { get; set; }
 

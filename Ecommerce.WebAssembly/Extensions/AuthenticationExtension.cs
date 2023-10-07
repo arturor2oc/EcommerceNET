@@ -37,14 +37,14 @@ namespace EcommerceNET.WebAssembly.Extensions
         public async Task UpdateStateAuthentication(SesionDTO? sesionUser)
         {
             ClaimsPrincipal claimsPrincipal;
-            if (sesionUser == null)
+            if (sesionUser != null)
             {
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, sesionUser.IdUsuario.ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, sesionUser.NombreCompleto),
-                    new Claim(ClaimTypes.NameIdentifier, sesionUser.Correo),
-                    new Claim(ClaimTypes.NameIdentifier, sesionUser.Rol)
+                    new Claim(ClaimTypes.Name, sesionUser.NombreCompleto),
+                    new Claim(ClaimTypes.Email, sesionUser.Correo),
+                    new Claim(ClaimTypes.Role, sesionUser.Rol)
                 }, "JwtAuth"));
 
                 await _localStorage.SetItemAsync("sesionUsuario", sesionUser);

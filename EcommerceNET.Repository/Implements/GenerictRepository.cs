@@ -29,6 +29,7 @@ namespace EcommerceNET.Repository.Implements
         {
             try
             {
+                _dbContext.Set<TModel>().Exec
                 _dbContext.Set<TModel>().Add(model);
                 await _dbContext.SaveChangesAsync();
                 return model;

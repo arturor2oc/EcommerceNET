@@ -1,8 +1,70 @@
 ﻿@page "/login"
 @layout LoginLayout
 
-<h3>Login</h3>
+@using EcommerceNET.WebAssembly.Extensions
+@using Microsoft.AspNetCore.Components.Authorization
+@inject IUserService _userService
+@inject NavigationManager _navService
+@inject IToastService toastService
+@inject AuthenticationStateProvider authProvider
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                <div class="card-body">
+                    <EditForm Model="model" OnValidSubmit="Start">
+                        <DataAnnotationsValidator></DataAnnotationsValidator>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputEmail" type="email" placeholder="admin@example.com" @bind-value="model.Correo" autocomplete="off" />
+                            <label for="inputEmail">Correo</label>
+                            <ValidationMessage For="@(()=>model.Correo)" />
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputPassword" type="password" placeholder="123" @bind-value="model.Clave" autocomplete="off" />
+                            <label for="inputPassword">Contraseña</label>
+                            <ValidationMessage For="@(()=>model.Clave)" />
+                        </div>
+
+                        <div class="d-grid gap-1 mt-4 mb-0">
+                            <button class="btn btn-primary" type="submit">Ingresar</button>
+                        </div>
+                    </EditForm>
+                </div>
+                <div class="card-footer text-center py-3">
+                    <div class="small"><a href="/record">No tienes una cuenta? Registrate!</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    private LoginDTO model = new LoginDTO();
 
+    private async Task Start()
+    {
+        var respose = await _userService.Authorization(model);
+        if (respose.EsCorrecto)
+        {
+            SesionDTO sesion = (SesionDTO)respose.Resultado!;
+
+            var authExterna = (AuthenticationExtension)authProvider;
+            await authExterna.UpdateStateAuthentication(sesion);
+
+            if(sesion.Rol.ToLower() == "client")
+            {
+                _navService.NavigateTo("/catalog");
+            }
+            else
+            {
+                _navService.NavigateTo("/dashboard");
+            }
+        }
+        else
+        {
+            toastService.ShowWarning(respose.Mensaje!);
+        }
+    }
 }

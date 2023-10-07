@@ -70,18 +70,18 @@
             if (respose.EsCorrecto)
             {
                 model = (UserDTO)respose.Resultado!;
-                model.ConfirmarClave = Int32.Parse(model.Clave!);
+                model.ConfirmarClave = model.Clave;
             }
             else
             {
-                toastService.ShowWarning(respose.Mensaje);
+                toastService.ShowWarning(respose.Mensaje!);
             }
         }
     }
 
     private async Task SaveChanges()
     {
-        if (Int32.Parse(model.Clave!) != model.ConfirmarClave)
+        if (model.Clave != model.ConfirmarClave)
         {
             toastService.ShowWarning("La contraseñas no coinciden");
             return;
