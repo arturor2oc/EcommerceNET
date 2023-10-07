@@ -1,7 +1,79 @@
 ﻿@page "/detail/{id:int}"
 
-<h3>Detail</h3>
+@inject IProductService productService
+@inject ICarritoService cartService
+
+<div class="container px-4 px-lg-5 my-5">
+
+
+    @if (model != null)
+    {
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+                <img class="card-img-top border-dark border-1" src="@model.Imagen" style="width:100%;">
+            </div>
+            <div class="col-md-6">
+                <h1 class="display-5 fw-bolder">@model.Nombre</h1>
+                <div class="fs-5 mb-5">
+                    @if (model.PrecioOferta != 0 && model.PrecioOferta < model.Precio)
+                    {
+                        <span class="text-danger text-decoration-line-through">S/. @model.Precio</span>
+                        <span>S /.@model.PrecioOferta</span>
+                    }
+                    else
+                    {
+                        <span>S /.@model.Precio</span>
+                    }
+                </div>
+                <p class="lead">@model.Descripcion</p>
+                <div class="d-flex">
+                    <input class="form-control text-center me-3" type="number" min="1" style="width:60px" @bind-value="cont">
+                    <button class="btn btn-outline-dark flex-shrink-0 me-3" type="button" @onclick="(async() => await AddCart(model))">
+                        <i class="bi-cart-fill me-1"></i>
+                        Agregar al carrito
+                    </button>
+                    <a class="btn btn-outline-dark flex-shrink-0" href="/catalog">
+                        <i class="bi-cart-fill me-1"></i>
+                        Volver
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    }
+
+
+
+</div>
 
 @code {
+    [Parameter]
+    public int id { get; set; }
+    private ProductoDTO? model = null;
+    private int cont = 1;
 
+    protected override async Task OnParametersSetAsync()
+    {
+        var respose = await productService.Get(id);
+        if (respose.EsCorrecto)
+            model = (ProductoDTO)respose.Resultado!;
+    }
+
+    private async Task AddCart(ProductoDTO model)
+    {
+        decimal? priceFinal = (model.PrecioOferta != 0 && model.PrecioOferta < model.Precio) ? model.PrecioOferta : model.Precio;
+        CarritoDTO cart = new CarritoDTO()
+            {
+                Producto = model,
+                Cantidad = cont,
+                precio = priceFinal,
+                Total = Convert.ToDecimal(cont) * priceFinal
+            };
+        await cartService.AddCarrito(cart);
+    }
 }
