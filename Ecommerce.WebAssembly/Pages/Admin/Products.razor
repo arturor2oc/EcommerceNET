@@ -4,6 +4,8 @@
 @inject IToastService toastService
 @inject SweetAlertService Swal;
 
+@attribute [Authorize(Roles = "Administrador")]
+@*para otros roles quedaria asi [Authorize(Roles ="Administrador, rol2,rol3...")] *@
 <div class="row justify-content-center  mt-3">
     <div class="col-sm-6 col-md-4 col-xl-3 mb-4">
         <div class="d-grid gap-1 col-12 mx-auto">

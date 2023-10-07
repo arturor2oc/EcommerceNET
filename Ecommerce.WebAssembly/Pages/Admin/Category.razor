@@ -5,6 +5,8 @@
 @inject IToastService toastService;
 @inject NavigationManager _navService;
 
+@attribute [Authorize(Roles = "Administrador")]
+@*para otros roles quedaria asi [Authorize(Roles ="Administrador, rol2,rol3...")] *@
 <div class="row justify-content-center  mt-3">
     <p class="col-sm-12 col-md-8 col-xl-10 h4 mt-2">@title</p>
 </div>

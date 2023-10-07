@@ -2,6 +2,8 @@
 
 @inject IDashboardService dashboardService;
 
+@attribute [Authorize(Roles = "Administrador")]
+@*para otros roles quedaria asi [Authorize(Roles ="Administrador, rol2,rol3...")] *@
 <div class="row mt-4">
 
     <div class="col-sm-6 mb-3">

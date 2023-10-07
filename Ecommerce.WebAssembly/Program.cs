@@ -10,6 +10,9 @@ using EcommerceNET.WebAssembly.Services.Implements;
 
 using CurrieTechnologies.Razor.SweetAlert2;
 
+using Microsoft.AspNetCore.Components.Authorization;
+using EcommerceNET.WebAssembly.Extensions;
+
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
@@ -27,5 +30,8 @@ builder.Services.AddScoped<IVentService, VentService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 builder.Services.AddSweetAlert2();
+
+builder.Services.AddAuthorizationCore();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationExtension>();
 
 await builder.Build().RunAsync();
