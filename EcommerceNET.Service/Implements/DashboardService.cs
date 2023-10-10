@@ -44,7 +44,7 @@ namespace EcommerceNET.Service.Implements
         }
         private int Clients()
         {
-            var query = _userRepository.GetAll(user => user.Rol.ToLower() == "cliente");
+            var query = _userRepository.GetAll(user => user.Rol.ToLower() == "client");
             int total = query.Count();
             return total;
         }

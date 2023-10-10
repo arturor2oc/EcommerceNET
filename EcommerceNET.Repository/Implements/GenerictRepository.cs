@@ -24,12 +24,11 @@ namespace EcommerceNET.Repository.Implements
             IQueryable<TModel> query = (filtro == null) ? _dbContext.Set<TModel>() : _dbContext.Set<TModel>().Where(filtro);
             return query;
         }
-
+        
         public async Task<TModel> Insert(TModel model)
         {
             try
             {
-                _dbContext.Set<TModel>().Exec
                 _dbContext.Set<TModel>().Add(model);
                 await _dbContext.SaveChangesAsync();
                 return model;
