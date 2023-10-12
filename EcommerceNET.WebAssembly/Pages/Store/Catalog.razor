@@ -17,12 +17,8 @@
     </div>
 </div>
 
-
-
 <div class="row">
     <div class="col-sm-3">
-
-
         <div class="card">
             <div class="card-header text-white bg-dark">
                 Categorias
@@ -57,9 +53,7 @@
                     </div>
                 }
             </div>
-
         </div>
-
     </div>
 
     <div class="col-sm-9">
@@ -113,47 +107,5 @@
 </div>
 
 @code {
-    private List<CategoriaDTO>? listCategory = null;
-    private List<ProductoDTO>? listProduct = null;
-    private string searh = "";
-    private string categorySelection = "Todos";
-
-    private async Task GetCategories(string value = "")
-    {
-        var respose = await categoryService.ListCategory(value);
-        if (respose.EsCorrecto)
-        {
-            listCategory = (List<CategoriaDTO>)respose.Resultado!;
-        }
-        else
-        {
-            listCategory = new List<CategoriaDTO>();
-        }
-    }
-
-    private async Task GetCatalog()
-    {
-        var respose = await productService.Catalog(categorySelection, searh);
-        if (respose.EsCorrecto)
-        {
-            listProduct = (List<ProductoDTO>)respose.Resultado!;
-        }
-        else
-        {
-            listProduct = new List<ProductoDTO>();
-        }
-    }
-
-    private async Task RadioSelection(ChangeEventArgs args)
-    {
-        categorySelection = args.Value.ToString();
-        searh = "";
-        await GetCatalog();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await GetCategories();
-        await GetCatalog();
-    }
+    
 }

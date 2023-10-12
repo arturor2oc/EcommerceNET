@@ -4,7 +4,7 @@
 @inject IToastService toastService
 @inject SweetAlertService Swal;
 
-@attribute [Authorize(Roles ="Administrador")]
+@attribute [Authorize(Roles = "Administrador")]
 @*para otros roles quedaria asi [Authorize(Roles ="Administrador, rol2,rol3...")] *@
 <div class="row justify-content-center  mt-3">
     <div class="col-sm-6 col-md-4 col-xl-3 mb-4">
@@ -24,7 +24,6 @@
 
 <div class="row gx-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 justify-content-start mt-2">
 
-
     @if (list != null)
     {
         foreach (var item in list)
@@ -42,7 +41,7 @@
                     </div>
                     <div class="card-footer bg-transparent">
                         <div class="row justify-content-between">
-                            <a class="col-5 btn btn-sm btn-outline-primary mt-auto" href="/usuario/@item.IdUsuario"><i class="oi oi-pencil fs-5"></i></a>
+                            <a class="col-5 btn btn-sm btn-outline-primary mt-auto" href="/user/@item.IdUsuario"><i class="oi oi-pencil fs-5"></i></a>
                             <button class="col-5 btn btn-sm btn-outline-danger mt-auto" type="button" @onclick="(async () => await Delete(item))">
                                 <i class="oi oi-trash fs-5"></i>
                             </button>
@@ -62,52 +61,5 @@
 </div>
 
 @code {
-    private List<UserDTO>? list = null;
-    private string searh = "";
-
-    private async Task GetUsers(string value = "")
-    {
-        var respose = await usuarioService.ListUser("Administrador", value);
-        if (respose.EsCorrecto)
-        {
-            list = (List<UserDTO>)respose.Resultado!;
-        }
-        else
-        {
-            list = new List<UserDTO>();
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await GetUsers();
-    }
-
-    private async Task Delete(UserDTO model)
-    {
-        SweetAlertResult result = await Swal.FireAsync(new SweetAlertOptions
-            {
-                Title = "Estas Seguro?",
-                Text = $"Eliminar usuario {model.NombreCompleto}",
-                Icon = SweetAlertIcon.Warning,
-                ShowCancelButton = true,
-                ConfirmButtonText = "Si, eliminar",
-                CancelButtonText = "No, volver",
-            });
-
-        if (result.IsConfirmed)
-        {
-            var respose = await usuarioService.Delete(model.IdUsuario);
-            if (respose.EsCorrecto)
-            {
-                await GetUsers();
-                toastService.ShowSuccess("Usuario Eliminado");
-            }
-            else
-            {
-                toastService.ShowSuccess(respose.Mensaje!);
-            }
-        }
-    }
 
 }
